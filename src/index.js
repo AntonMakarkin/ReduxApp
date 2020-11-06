@@ -6,19 +6,22 @@ const reducer = (state = 0, action) => { //must be clean function
       return state + 1;
     case 'DEC':
       return state - 1;
-    case 'RND':
-      return state + action.value;
+    case 'RES':
+      return 0;
     default:
       return state
   }
 }
 
+//creating the store
+let store = createStore(reducer);
+
+//subsidiary functions
 const inc = () => ({type: 'INC'}); //action-creators
 const dec = () => ({type: 'DEC'});
-const rnd = (value) => ({type: 'RND', value})
+const res = () => ({type: 'RES'})
 
-const store = createStore(reducer);
-
+//click-buttons
 document.getElementById('inc').addEventListener('click', () => {
   store.dispatch(inc())
 });
@@ -27,12 +30,11 @@ document.getElementById('dec').addEventListener('click', () => {
   store.dispatch(dec())
 });
 
-document.getElementById('rnd').addEventListener('click', () => {
-  const value = Math.floor(Math.random() * 10)
-  store.dispatch(rnd(value))
+document.getElementById('res').addEventListener('click', () => {
+  store.dispatch(res())
 });
 
-
+//function updates counter
 const update = () => {
   document.getElementById('counter').textContent = store.getState();
 }
